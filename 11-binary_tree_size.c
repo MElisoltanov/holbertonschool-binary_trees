@@ -19,12 +19,13 @@ size_t binary_tree_size(const binary_tree_t *tree)
 			return (0);
 		}
 
-	/* Étape 2 : On appelle la fonction de manière récursive sur les enfants gauche et droit. */
+	/* Étape 2 : On appelle la fonction de manière */
+	/* récursive sur les enfants gauche et droit. */
 
 		tree_right = binary_tree_size(tree->right);
 		tree_left = binary_tree_size(tree->left);
 
-	/* Étape 3 : On additionne le total gauche + total droit + 1 (pour le nœud actuel). */
+	/* Étape 3 : On additionne le total gauche + total droit + 1. */
 
 		total = tree_right + tree_left + 1;
 
