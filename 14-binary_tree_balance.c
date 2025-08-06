@@ -1,47 +1,5 @@
 #include "binary_trees.h"
-
-/**
- * binary_tree_height - Measures the height of a binary tree
- * @tree: Pointer to the root node of the tree to measure the height
- *
- * Return: Height of the tree, or 0 if tree is NULL
- */
-size_t binary_tree_height(const binary_tree_t *tree)
-{
-	size_t right_height;
-	size_t left_height;
-
-	/* Étape 1 : Vérifie si le pointeur tree est NULL. */
-
-	if (tree == NULL)
-	{
-		return (0);
-	}
-
-	/* Étape 2 : Si le nœud n’a pas d’enfant, la hauteur est 0. */
-
-	if (tree->right == NULL && tree->left == NULL)
-	{
-		return (0);
-	}
-
-	/* Étape 3 : Calcule récursivement la hauteur de gauche et de droite. */
-
-	right_height = binary_tree_height(tree->right);
-	left_height = binary_tree_height(tree->left);
-
-	/* Étape 4 : Retourne le maximum des deux hauteurs + 1 */
-
-	if (left_height < right_height)
-	{
-		return (right_height + 1);
-	}
-
-	else
-	{
-		return (left_height + 1);
-	}
-}
+#include "9-binary_tree_height.c"
 
 /**
  * binary_tree_balance - Measures the balance factor of a binary tree
@@ -51,28 +9,41 @@ size_t binary_tree_height(const binary_tree_t *tree)
  */
 int binary_tree_balance(const binary_tree_t *tree)
 {
-	int tree_right;
-	int tree_left;
+	int height_right = 0;
+	int height_left = 0;
 	int balance;
 
-    /* Étape 1 : On vérifie si tree est NULL. */
+	/* Étape 1 : On vérifie si tree est NULL. */
 
 	if (tree == NULL)
 	{
 		return (0);
 	}
 
-    /* Étape 2 : On appelle binary_tree_height */
-	/* sur les enfants gauche et droit */
+	/* Étape 2 : On calcule la hauteur des sous-arbres gauche et droit. */
 
-	tree_right = binary_tree_height(tree->right);
-	tree_left = binary_tree_height(tree->left);
+	height_right = binary_tree_height(tree->right);
+	height_left = binary_tree_height(tree->left);
 
-    /* Étape 3 : On soustrait les deux valeurs → left - right */
+	/* Étape 3 : On corrige les cas où un des enfants n’existe pas */
+		/* S’il n’y a PAS d’enfant gauche, on force sa "hauteur" à -1 */
+		/* Idem pour le droit. */
 
-	balance = tree_left - tree_right;
+	if (tree->left == NULL)
+	{
+		height_left = -1;
+	}
 
-    /* Étape 4 : Retourne balance */
+	if (tree->right == NULL)
+	{
+		height_right = -1;
+	}
+
+	/* Étape 4 : On calcule le balance */
+
+	balance = height_left - height_right;
+
+	/* Étape 5 : On retourne le résultat */
 
 	return (balance);
 }
